@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results - SelamBus</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav">
+            <div class="nav-container">
+                <div class="nav-brand">
+                    <a href="index.html">
+                        <i class="fas fa-bus"></i>
+                        <span>SelamBus</span>
+                    </a>
+                </div>
+                
+                <div class="nav-menu" id="navMenu">
+                    <a href="index.html" class="nav-link">Home</a>
+                    <a href="#" class="nav-link">About</a>
+                    <a href="#" class="nav-link">Contact</a>
+                    <a href="#" class="nav-link">Help</a>
+                </div>
+                
+                <div class="nav-actions">
+                    <a href="#" class="btn-login">Login</a>
+                    <button class="mobile-menu-toggle" id="mobileMenuToggle">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Search Results Section -->
+    <section class="search-results-section">
+        <div class="container">
+            <!-- Search Summary -->
+            <div class="search-summary">
+                <div class="route-info">
+                    <h2>Addis Ababa → Hawassa</h2>
+                    <p>Departure: <span id="departureDate">December 15, 2024</span> | Passengers: <span id="passengerCount">1</span></p>
+                </div>
+                <button class="btn-modify-search" onclick="showModifySearch()">
+                    <i class="fas fa-edit"></i> Modify Search
+                </button>
+            </div>
+
+            <!-- Modify Search Form (Hidden by default) -->
+            <div class="modify-search-form" id="modifySearchForm" style="display: none;">
+                <div class="search-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="fromCity">From</label>
+                            <input type="text" id="fromCity" placeholder="From City" value="Addis Ababa">
+                        </div>
+                        <div class="form-group">
+                            <label for="toCity">To</label>
+                            <input type="text" id="toCity" placeholder="To City" value="Hawassa">
+                        </div>
+                        <div class="form-group">
+                            <label for="departureDate">Departure Date</label>
+                            <input type="date" id="departureDateInput" value="2024-12-15">
+                        </div>
+                        <div class="form-group">
+                            <label for="passengers">Passengers</label>
+                            <select id="passengers">
+                                <option value="1">1 Passenger</option>
+                                <option value="2">2 Passengers</option>
+                                <option value="3">3 Passengers</option>
+                                <option value="4">4 Passengers</option>
+                                <option value="5+">5+ Passengers</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button class="btn-search" onclick="updateSearch()">
+                            <i class="fas fa-search"></i> Update Search
+                        </button>
+                        <button class="btn-cancel" onclick="hideModifySearch()">Cancel</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="results-layout">
+                <!-- Filters Sidebar -->
+                <aside class="filters-sidebar">
+                    <div class="filter-section">
+                        <h3>Filters</h3>
+                        
+                        <!-- Departure Time Filter -->
+                        <div class="filter-group">
+                            <h4>Departure Time</h4>
+                            <div class="filter-options">
+                                <label class="filter-checkbox">
+                                    <input type="checkbox" id="morning" checked>
+                                    <span class="checkmark"></span>
+                                    Morning (6AM - 12PM)
+                                    <span class="count">(8)</span>
+                                </label>
+                                <label class="filter-checkbox">
+                                    <input type="checkbox" id="afternoon" checked>
+                                    <span class="checkmark"></span>
+                                    Afternoon (12PM - 6PM)
+                                    <span class="count">(12)</span>
+                                </label>
+                                <label class="filter-checkbox">
+                                    <input type="checkbox" id="evening" checked>
+                                    <span class="checkmark"></span>
+                                    Evening (6PM - 12AM)
+                                    <span class="count">(6)</span>
+                                </label>
+                                <label class="filter-checkbox">
+                                    <input type="checkbox" id="night">
+                                    <span class="checkmark"></span>
+                                    Night (12AM - 6AM)
+                                    <span class="count">(2)</span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <!-- Bus Type Filter -->
+                        <div class="filter-group">
+                            <h4>Bus Type</h4>
+                            <div class="filter-options">
+                                <label class="filter-checkbox">
+                                    <input type="checkbox" id="economy" checked>
+                                    <span class="checkmark"></span>
+                                    Economy
+                                    <span class="count">(18)</span>
+                                </label>
+                                <label class="filter-checkbox">
+                                    <input type="checkbox" id="business" checked>
+                                    <span class="checkmark"></span>
+                                    Business
+                                    <span class="count">(8)</span>
+                                </label>
+                                <label class="filter-checkbox">
+                                    <input type="checkbox" id="luxury">
+                                    <span class="checkmark"></span>
+                                    Luxury/Sleeper
+                                    <span class="count">(2)</span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <!-- Bus Company Filter -->
+                        <div class="filter-group">
+                            <h4>Bus Company</h4>
+                            <div class="filter-options">
+                                <label class="filter-checkbox">
+                                    <input type="checkbox" id="selam-bus" checked>
+                                    <span class="checkmark"></span>
+                                    Selam Bus
+                                    <span class="count">(6)</span>
+                                </label>
+                                <label class="filter-checkbox">
+                                    <input type="checkbox" id="golden-bus" checked>
+                                    <span class="checkmark"></span>
+                                    Golden Bus
+                                    <span class="count">(5)</span>
+                                </label>
+                                <label class="filter-checkbox">
+                                    <input type="checkbox" id="sky-bus" checked>
+                                    <span class="checkmark"></span>
+                                    Sky Bus
+                                    <span class="count">(4)</span>
+                                </label>
+                                <label class="filter-checkbox">
+                                    <input type="checkbox" id="ethio-bus">
+                                    <span class="checkmark"></span>
+                                    Ethio Bus
+                                    <span class="count">(3)</span>
+                                </label>
+                                <label class="filter-checkbox">
+                                    <input type="checkbox" id="kibru-bus">
+                                    <span class="checkmark"></span>
+                                    Kibru Bus
+                                    <span class="count">(2)</span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <!-- Price Range Filter -->
+                        <div class="filter-group">
+                            <h4>Price Range</h4>
+                            <div class="price-range">
+                                <input type="range" id="priceRange" min="100" max="500" value="500" class="price-slider">
+                                <div class="price-labels">
+                                    <span>ETB 100</span>
+                                    <span id="maxPrice">ETB 500</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Amenities Filter -->
+                        <div class="filter-group">
+                            <h4>Amenities</h4>
+                            <div class="filter-options">
+                                <label class="filter-checkbox">
+                                    <input type="checkbox" id="wifi">
+                                    <span class="checkmark"></span>
+                                    WiFi
+                                </label>
+                                <label class="filter-checkbox">
+                                    <input type="checkbox" id="ac">
+                                    <span class="checkmark"></span>
+                                    Air Conditioning
+                                </label>
+                                <label class="filter-checkbox">
+                                    <input type="checkbox" id="toilet">
+                                    <span class="checkmark"></span>
+                                    Toilet
+                                </label>
+                                <label class="filter-checkbox">
+                                    <input type="checkbox" id="charging">
+                                    <span class="checkmark"></span>
+                                    Charging Port
+                                </label>
+                                <label class="filter-checkbox">
+                                    <input type="checkbox" id="snack">
+                                    <span class="checkmark"></span>
+                                    Snack Service
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <button class="btn-clear-filters" onclick="clearAllFilters()">
+                            <i class="fas fa-times"></i> Clear All Filters
+                        </button>
+                    </div>
+                </aside>
+
+                <!-- Results Content -->
+                <main class="results-content">
+                    <!-- Results Header -->
+                    <div class="results-header">
+                        <div class="results-info">
+                            <h3>28 Available Buses</h3>
+                            <p>Showing results for your selected route</p>
+                        </div>
+                        <div class="sort-options">
+                            <label for="sortBy">Sort by:</label>
+                            <select id="sortBy" onchange="sortResults()">
+                                <option value="departure">Earliest Departure</option>
+                                <option value="price-low">Lowest Price</option>
+                                <option value="price-high">Highest Price</option>
+                                <option value="rating">Highest Rating</option>
+                                <option value="duration">Shortest Duration</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Bus Results -->
+                    <div class="bus-results" id="busResults">
+                        <!-- Bus Card 1 -->
+                        <div class="bus-card" data-departure="08:00" data-price="150" data-rating="4.5" data-duration="4.5">
+                            <div class="bus-header">
+                                <div class="bus-company">
+                                    <img src="https://via.placeholder.com/50x50/2563eb/ffffff?text=SB" alt="Selam Bus" class="company-logo">
+                                    <div class="company-info">
+                                        <h4>Selam Bus</h4>
+                                        <span class="bus-type">Higer Bus</span>
+                                    </div>
+                                </div>
+                                <div class="bus-rating">
+                                    <div class="rating-stars">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                    </div>
+                                    <span class="rating-text">4.5 (128)</span>
+                                </div>
+                            </div>
+                            
+                            <div class="bus-details">
+                                <div class="route-info">
+                                    <div class="departure">
+                                        <div class="time">08:00</div>
+                                        <div class="location">Addis Ababa</div>
+                                        <div class="terminal">Autobus Tera</div>
+                                    </div>
+                                    
+                                    <div class="journey-info">
+                                        <div class="duration">4h 30m</div>
+                                        <div class="route-line"></div>
+                                        <div class="distance">275 km</div>
+                                    </div>
+                                    
+                                    <div class="arrival">
+                                        <div class="time">12:30</div>
+                                        <div class="location">Hawassa</div>
+                                        <div class="terminal">Main Terminal</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="bus-features">
+                                    <div class="feature">
+                                        <i class="fas fa-wifi"></i>
+                                        <span>WiFi</span>
+                                    </div>
+                                    <div class="feature">
+                                        <i class="fas fa-snowflake"></i>
+                                        <span>AC</span>
+                                    </div>
+                                    <div class="feature">
+                                        <i class="fas fa-restroom"></i>
+                                        <span>Toilet</span>
+                                    </div>
+                                    <div class="feature">
+                                        <i class="fas fa-plug"></i>
+                                        <span>Charging</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="bus-footer">
+                                    <div class="price-info">
+                                        <div class="price">ETB 150</div>
+                                        <div class="seats-available">18 seats available</div>
+                                    </div>
+                                    <button class="btn-select-seats" onclick="selectSeats('selam-bus-1')">
+                                        Select Seats
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Bus Card 2 -->
+                        <div class="bus-card" data-departure="10:30" data-price="200" data-rating="4.2" data-duration="4">
+                            <div class="bus-header">
+                                <div class="bus-company">
+                                    <img src="https://via.placeholder.com/50x50/f59e0b/ffffff?text=GB" alt="Golden Bus" class="company-logo">
+                                    <div class="company-info">
+                                        <h4>Golden Bus</h4>
+                                        <span class="bus-type">Business Class</span>
+                                    </div>
+                                </div>
+                                <div class="bus-rating">
+                                    <div class="rating-stars">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                    </div>
+                                    <span class="rating-text">4.2 (95)</span>
+                                </div>
+                            </div>
+                            
+                            <div class="bus-details">
+                                <div class="route-info">
+                                    <div class="departure">
+                                        <div class="time">10:30</div>
+                                        <div class="location">Addis Ababa</div>
+                                        <div class="terminal">Autobus Tera</div>
+                                    </div>
+                                    
+                                    <div class="journey-info">
+                                        <div class="duration">4h 00m</div>
+                                        <div class="route-line"></div>
+                                        <div class="distance">275 km</div>
+                                    </div>
+                                    
+                                    <div class="arrival">
+                                        <div class="time">14:30</div>
+                                        <div class="location">Hawassa</div>
+                                        <div class="terminal">Main Terminal</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="bus-features">
+                                    <div class="feature">
+                                        <i class="fas fa-wifi"></i>
+                                        <span>WiFi</span>
+                                    </div>
+                                    <div class="feature">
+                                        <i class="fas fa-snowflake"></i>
+                                        <span>AC</span>
+                                    </div>
+                                    <div class="feature">
+                                        <i class="fas fa-restroom"></i>
+                                        <span>Toilet</span>
+                                    </div>
+                                    <div class="feature">
+                                        <i class="fas fa-tv"></i>
+                                        <span>TV</span>
+                                    </div>
+                                    <div class="feature">
+                                        <i class="fas fa-coffee"></i>
+                                        <span>Snack</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="bus-footer">
+                                    <div class="price-info">
+                                        <div class="price">ETB 200</div>
+                                        <div class="seats-available">12 seats available</div>
+                                    </div>
+                                    <button class="btn-select-seats" onclick="selectSeats('golden-bus-1')">
+                                        Select Seats
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Bus Card 3 -->
+                        <div class="bus-card" data-departure="14:00" data-price="180" data-rating="4.0" data-duration="4.5">
+                            <div class="bus-header">
+                                <div class="bus-company">
+                                    <img src="https://via.placeholder.com/50x50/10b981/ffffff?text=SK" alt="Sky Bus" class="company-logo">
+                                    <div class="company-info">
+                                        <h4>Sky Bus</h4>
+                                        <span class="bus-type">Standard Coach</span>
+                                    </div>
+                                </div>
+                                <div class="bus-rating">
+                                    <div class="rating-stars">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                    </div>
+                                    <span class="rating-text">4.0 (76)</span>
+                                </div>
+                            </div>
+                            
+                            <div class="bus-details">
+                                <div class="route-info">
+                                    <div class="departure">
+                                        <div class="time">14:00</div>
+                                        <div class="location">Addis Ababa</div>
+                                        <div class="terminal">Autobus Tera</div>
+                                    </div>
+                                    
+                                    <div class="journey-info">
+                                        <div class="duration">4h 30m</div>
+                                        <div class="route-line"></div>
+                                        <div class="distance">275 km</div>
+                                    </div>
+                                    
+                                    <div class="arrival">
+                                        <div class="time">18:30</div>
+                                        <div class="location">Hawassa</div>
+                                        <div class="terminal">Main Terminal</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="bus-features">
+                                    <div class="feature">
+                                        <i class="fas fa-snowflake"></i>
+                                        <span>AC</span>
+                                    </div>
+                                    <div class="feature">
+                                        <i class="fas fa-restroom"></i>
+                                        <span>Toilet</span>
+                                    </div>
+                                    <div class="feature">
+                                        <i class="fas fa-plug"></i>
+                                        <span>Charging</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="bus-footer">
+                                    <div class="price-info">
+                                        <div class="price">ETB 180</div>
+                                        <div class="seats-available">20 seats available</div>
+                                    </div>
+                                    <button class="btn-select-seats" onclick="selectSeats('sky-bus-1')">
+                                        Select Seats
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Bus Card 4 -->
+                        <div class="bus-card" data-departure="16:30" data-price="220" data-rating="4.7" data-duration="4">
+                            <div class="bus-header">
+                                <div class="bus-company">
+                                    <img src="https://via.placeholder.com/50x50/8b5cf6/ffffff?text=LB" alt="Luxury Bus" class="company-logo">
+                                    <div class="company-info">
+                                        <h4>Luxury Bus Lines</h4>
+                                        <span class="bus-type">Luxury Sleeper</span>
+                                    </div>
+                                </div>
+                                <div class="bus-rating">
+                                    <div class="rating-stars">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                    <span class="rating-text">4.7 (45)</span>
+                                </div>
+                            </div>
+                            
+                            <div class="bus-details">
+                                <div class="route-info">
+                                    <div class="departure">
+                                        <div class="time">16:30</div>
+                                        <div class="location">Addis Ababa</div>
+                                        <div class="terminal">Autobus Tera</div>
+                                    </div>
+                                    
+                                    <div class="journey-info">
+                                        <div class="duration">4h 00m</div>
+                                        <div class="route-line"></div>
+                                        <div class="distance">275 km</div>
+                                    </div>
+                                    
+                                    <div class="arrival">
+                                        <div class="time">20:30</div>
+                                        <div class="location">Hawassa</div>
+                                        <div class="terminal">Main Terminal</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="bus-features">
+                                    <div class="feature">
+                                        <i class="fas fa-wifi"></i>
+                                        <span>WiFi</span>
+                                    </div>
+                                    <div class="feature">
+                                        <i class="fas fa-snowflake"></i>
+                                        <span>AC</span>
+                                    </div>
+                                    <div class="feature">
+                                        <i class="fas fa-restroom"></i>
+                                        <span>Toilet</span>
+                                    </div>
+                                    <div class="feature">
+                                        <i class="fas fa-tv"></i>
+                                        <span>TV</span>
+                                    </div>
+                                    <div class="feature">
+                                        <i class="fas fa-bed"></i>
+                                        <span>Sleeper</span>
+                                    </div>
+                                    <div class="feature">
+                                        <i class="fas fa-coffee"></i>
+                                        <span>Meal</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="bus-footer">
+                                    <div class="price-info">
+                                        <div class="price">ETB 220</div>
+                                        <div class="seats-available">8 seats available</div>
+                                    </div>
+                                    <button class="btn-select-seats" onclick="selectSeats('luxury-bus-1')">
+                                        Select Seats
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Bus Card 5 -->
+                        <div class="bus-card" data-departure="20:00" data-price="160" data-rating="3.8" data-duration="5">
+                            <div class="bus-header">
+                                <div class="bus-company">
+                                    <img src="https://via.placeholder.com/50x50/f59e0b/ffffff?text=EB" alt="Ethio Bus" class="company-logo">
+                                    <div class="company-info">
+                                        <h4>Ethio Bus</h4>
+                                        <span class="bus-type">Standard Coach</span>
+                                    </div>
+                                </div>
+                                <div class="bus-rating">
+                                    <div class="rating-stars">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                    </div>
+                                    <span class="rating-text">3.8 (62)</span>
+                                </div>
+                            </div>
+                            
+                            <div class="bus-details">
+                                <div class="route-info">
+                                    <div class="departure">
+                                        <div class="time">20:00</div>
+                                        <div class="location">Addis Ababa</div>
+                                        <div class="terminal">Autobus Tera</div>
+                                    </div>
+                                    
+                                    <div class="journey-info">
+                                        <div class="duration">5h 00m</div>
+                                        <div class="route-line"></div>
+                                        <div class="distance">275 km</div>
+                                    </div>
+                                    
+                                    <div class="arrival">
+                                        <div class="time">01:00</div>
+                                        <div class="location">Hawassa</div>
+                                        <div class="terminal">Main Terminal</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="bus-features">
+                                    <div class="feature">
+                                        <i class="fas fa-snowflake"></i>
+                                        <span>AC</span>
+                                    </div>
+                                    <div class="feature">
+                                        <i class="fas fa-plug"></i>
+                                        <span>Charging</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="bus-footer">
+                                    <div class="price-info">
+                                        <div class="price">ETB 160</div>
+                                        <div class="seats-available">15 seats available</div>
+                                    </div>
+                                    <button class="btn-select-seats" onclick="selectSeats('ethio-bus-1')">
+                                        Select Seats
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Load More Button -->
+                    <div class="load-more-container">
+                        <button class="btn-load-more" onclick="loadMoreResults()">
+                            <i class="fas fa-spinner"></i> Load More Results
+                        </button>
+                    </div>
+                </main>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>About SelamBus</h4>
+                    <p>Your trusted partner for bus travel across Ethiopia. Book your tickets online with ease and convenience.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-telegram"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#">How It Works</a></li>
+                        <li><a href="#">Popular Routes</a></li>
+                        <li><a href="#">Bus Companies</a></li>
+                        <li><a href="#">FAQs</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Cancellation Policy</a></li>
+                        <li><a href="#">Terms & Conditions</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Contact Info</h4>
+                    <div class="contact-info">
+                        <p><i class="fas fa-phone"></i> +251 911 123 456</p>
+                        <p><i class="fas fa-envelope"></i> support@selambus.com</p>
+                        <p><i class="fas fa-map-marker-alt"></i> Addis Ababa, Ethiopia</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 SelamBus. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="search-results.js"></script>
+</body>
+</html>

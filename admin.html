@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SelamBus - Admin Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="admin-container">
+        <!-- Sidebar -->
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <i class="fas fa-bus"></i>
+                    <span>SelamBus Admin</span>
+                </div>
+                <button class="sidebar-toggle" id="sidebarToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+            
+            <ul class="sidebar-menu">
+                <li class="menu-item active" data-section="dashboard">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <span>Dashboard</span>
+                </li>
+                <li class="menu-item" data-section="bookings">
+                    <i class="fas fa-ticket-alt"></i>
+                    <span>Bookings</span>
+                    <span class="badge" id="pendingBookings">0</span>
+                </li>
+                <li class="menu-item" data-section="buses">
+                    <i class="fas fa-bus"></i>
+                    <span>Buses & Routes</span>
+                </li>
+                <li class="menu-item" data-section="users">
+                    <i class="fas fa-users"></i>
+                    <span>Users</span>
+                </li>
+                <li class="menu-item" data-section="reports">
+                    <i class="fas fa-chart-bar"></i>
+                    <span>Reports</span>
+                </li>
+                <li class="menu-item" data-section="settings">
+                    <i class="fas fa-cog"></i>
+                    <span>Settings</span>
+                </li>
+            </ul>
+            
+            <div class="sidebar-footer">
+                <div class="admin-info">
+                    <div class="admin-avatar">
+                        <i class="fas fa-user-shield"></i>
+                    </div>
+                    <div class="admin-details">
+                        <div class="admin-name">Admin User</div>
+                        <div class="admin-role">Super Admin</div>
+                    </div>
+                </div>
+                <button class="logout-btn" id="logoutBtn">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </button>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="admin-header">
+                <div class="header-left">
+                    <h1 id="sectionTitle">Dashboard</h1>
+                    <div class="breadcrumb">
+                        <span>Admin</span>
+                        <i class="fas fa-chevron-right"></i>
+                        <span id="currentSection">Dashboard</span>
+                    </div>
+                </div>
+                <div class="header-right">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Search..." id="globalSearch">
+                    </div>
+                    <div class="notifications">
+                        <button class="notification-btn" id="notificationBtn">
+                            <i class="fas fa-bell"></i>
+                            <span class="notification-badge" id="notificationCount">0</span>
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Dashboard Section -->
+            <section id="dashboard" class="section active">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon revenue">
+                            <i class="fas fa-dollar-sign"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3>Total Revenue</h3>
+                            <p class="stat-value" id="totalRevenue">ETB 0</p>
+                            <span class="stat-change positive">+12.5%</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon bookings">
+                            <i class="fas fa-ticket-alt"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3>Total Bookings</h3>
+                            <p class="stat-value" id="totalBookings">0</p>
+                            <span class="stat-change positive">+8.2%</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon users">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3>Active Users</h3>
+                            <p class="stat-value" id="activeUsers">0</p>
+                            <span class="stat-change positive">+15.3%</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon buses">
+                            <i class="fas fa-bus"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3>Active Buses</h3>
+                            <p class="stat-value" id="activeBuses">0</p>
+                            <span class="stat-change negative">-2.1%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dashboard-grid">
+                    <div class="chart-container">
+                        <div class="chart-header">
+                            <h3>Revenue Overview</h3>
+                            <select id="revenuePeriod">
+                                <option value="7">Last 7 Days</option>
+                                <option value="30" selected>Last 30 Days</option>
+                                <option value="90">Last 90 Days</option>
+                            </select>
+                        </div>
+                        <canvas id="revenueChart"></canvas>
+                    </div>
+                    <div class="recent-activities">
+                        <div class="section-header">
+                            <h3>Recent Activities</h3>
+                            <a href="#" class="view-all">View All</a>
+                        </div>
+                        <div class="activities-list" id="activitiesList">
+                            <!-- Activities will be populated by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="top-routes">
+                    <div class="section-header">
+                        <h3>Top Routes</h3>
+                        <a href="#" class="view-all">View All</a>
+                    </div>
+                    <div class="routes-table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Route</th>
+                                    <th>Bookings</th>
+                                    <th>Revenue</th>
+                                    <th>Occupancy</th>
+                                </tr>
+                            </thead>
+                            <tbody id="topRoutesTable">
+                                <!-- Routes will be populated by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Bookings Section -->
+            <section id="bookings" class="section">
+                <div class="section-controls">
+                    <div class="filters">
+                        <select id="bookingStatusFilter">
+                            <option value="">All Status</option>
+                            <option value="pending">Pending</option>
+                            <option value="confirmed">Confirmed</option>
+                            <option value="cancelled">Cancelled</option>
+                            <option value="completed">Completed</option>
+                        </select>
+                        <select id="bookingDateFilter">
+                            <option value="">All Dates</option>
+                            <option value="today">Today</option>
+                            <option value="week">This Week</option>
+                            <option value="month">This Month</option>
+                        </select>
+                        <input type="date" id="bookingDatePicker">
+                    </div>
+                    <div class="actions">
+                        <button class="btn btn-secondary" id="exportBookings">
+                            <i class="fas fa-download"></i>
+                            Export
+                        </button>
+                        <button class="btn btn-primary" id="addBooking">
+                            <i class="fas fa-plus"></i>
+                            Add Booking
+                        </button>
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <table class="bookings-table">
+                        <thead>
+                            <tr>
+                                <th>Booking ID</th>
+                                <th>Customer</th>
+                                <th>Route</th>
+                                <th>Date</th>
+                                <th>Time</th>
+                                <th>Seats</th>
+                                <th>Amount</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="bookingsTableBody">
+                            <!-- Bookings will be populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="pagination" id="bookingsPagination">
+                    <!-- Pagination will be populated by JavaScript -->
+                </div>
+            </section>
+
+            <!-- Buses Section -->
+            <section id="buses" class="section">
+                <div class="section-controls">
+                    <div class="filters">
+                        <select id="busCompanyFilter">
+                            <option value="">All Companies</option>
+                            <option value="selam">Selam Bus</option>
+                            <option value="sky">Sky Bus</option>
+                            <option value="golden">Golden Bus</option>
+                        </select>
+                        <select id="busTypeFilter">
+                            <option value="">All Types</option>
+                            <option value="economy">Economy</option>
+                            <option value="business">Business</option>
+                            <option value="luxury">Luxury</option>
+                        </select>
+                    </div>
+                    <div class="actions">
+                        <button class="btn btn-secondary" id="exportBuses">
+                            <i class="fas fa-download"></i>
+                            Export
+                        </button>
+                        <button class="btn btn-primary" id="addBus">
+                            <i class="fas fa-plus"></i>
+                            Add Bus
+                        </button>
+                    </div>
+                </div>
+
+                <div class="buses-grid" id="busesGrid">
+                    <!-- Buses will be populated by JavaScript -->
+                </div>
+
+                <div class="pagination" id="busesPagination">
+                    <!-- Pagination will be populated by JavaScript -->
+                </div>
+            </section>
+
+            <!-- Users Section -->
+            <section id="users" class="section">
+                <div class="section-controls">
+                    <div class="filters">
+                        <select id="userTypeFilter">
+                            <option value="">All Users</option>
+                            <option value="customer">Customer</option>
+                            <option value="admin">Admin</option>
+                        </select>
+                        <select id="userStatusFilter">
+                            <option value="">All Status</option>
+                            <option value="active">Active</option>
+                            <option value="inactive">Inactive</option>
+                        </select>
+                    </div>
+                    <div class="actions">
+                        <button class="btn btn-secondary" id="exportUsers">
+                            <i class="fas fa-download"></i>
+                            Export
+                        </button>
+                        <button class="btn btn-primary" id="addUser">
+                            <i class="fas fa-plus"></i>
+                            Add User
+                        </button>
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <table class="users-table">
+                        <thead>
+                            <tr>
+                                <th>User</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Type</th>
+                                <th>Status</th>
+                                <th>Join Date</th>
+                                <th>Bookings</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="usersTableBody">
+                            <!-- Users will be populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="pagination" id="usersPagination">
+                    <!-- Pagination will be populated by JavaScript -->
+                </div>
+            </section>
+
+            <!-- Reports Section -->
+            <section id="reports" class="section">
+                <div class="reports-grid">
+                    <div class="report-card">
+                        <h3>Revenue Report</h3>
+                        <p>Monthly revenue analysis</p>
+                        <button class="btn btn-primary" onclick="generateReport('revenue')">Generate</button>
+                    </div>
+                    <div class="report-card">
+                        <h3>Booking Report</h3>
+                        <p>Booking trends and patterns</p>
+                        <button class="btn btn-primary" onclick="generateReport('bookings')">Generate</button>
+                    </div>
+                    <div class="report-card">
+                        <h3>User Report</h3>
+                        <p>User registration and activity</p>
+                        <button class="btn btn-primary" onclick="generateReport('users')">Generate</button>
+                    </div>
+                    <div class="report-card">
+                        <h3>Route Report</h3>
+                        <p>Route performance analysis</p>
+                        <button class="btn btn-primary" onclick="generateReport('routes')">Generate</button>
+                    </div>
+                </div>
+
+                <div class="report-filters">
+                    <h3>Custom Report</h3>
+                    <div class="filter-group">
+                        <label>Report Type:</label>
+                        <select id="customReportType">
+                            <option value="revenue">Revenue</option>
+                            <option value="bookings">Bookings</option>
+                            <option value="users">Users</option>
+                            <option value="routes">Routes</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>Date Range:</label>
+                        <input type="date" id="reportStartDate">
+                        <input type="date" id="reportEndDate">
+                    </div>
+                    <button class="btn btn-primary" onclick="generateCustomReport()">Generate Custom Report</button>
+                </div>
+            </section>
+
+            <!-- Settings Section -->
+            <section id="settings" class="section">
+                <div class="settings-tabs">
+                    <button class="tab-btn active" data-tab="general">General</button>
+                    <button class="tab-btn" data-tab="payment">Payment</button>
+                    <button class="tab-btn" data-tab="notifications">Notifications</button>
+                    <button class="tab-btn" data-tab="security">Security</button>
+                </div>
+
+                <div class="settings-content">
+                    <div id="general" class="tab-content active">
+                        <div class="settings-group">
+                            <h3>General Settings</h3>
+                            <div class="form-group">
+                                <label>Site Name:</label>
+                                <input type="text" id="siteName" value="SelamBus">
+                            </div>
+                            <div class="form-group">
+                                <label>Site Description:</label>
+                                <textarea id="siteDescription">Ethiopia's leading bus ticket booking platform</textarea>
+                            </div>
+                            <div class="form-group">
+                                <label>Contact Email:</label>
+                                <input type="email" id="contactEmail" value="support@selambus.com">
+                            </div>
+                            <div class="form-group">
+                                <label>Contact Phone:</label>
+                                <input type="tel" id="contactPhone" value="+251 900 000 000">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="payment" class="tab-content">
+                        <div class="settings-group">
+                            <h3>Payment Settings</h3>
+                            <div class="form-group">
+                                <label>TeleBirr API Key:</label>
+                                <input type="password" id="telebirrApiKey" value="demo-key">
+                            </div>
+                            <div class="form-group">
+                                <label>Chapa API Key:</label>
+                                <input type="password" id="chapaApiKey" value="demo-key">
+                            </div>
+                            <div class="form-group">
+                                <label>Currency:</label>
+                                <select id="currency">
+                                    <option value="ETB" selected>ETB - Ethiopian Birr</option>
+                                    <option value="USD">USD - US Dollar</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="notifications" class="tab-content">
+                        <div class="settings-group">
+                            <h3>Notification Settings</h3>
+                            <div class="form-group">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="bookingNotifications" checked>
+                                    <span class="checkmark"></span>
+                                    Booking notifications
+                                </label>
+                            </div>
+                            <div class="form-group">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="paymentNotifications" checked>
+                                    <span class="checkmark"></span>
+                                    Payment notifications
+                                </label>
+                            </div>
+                            <div class="form-group">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="userNotifications" checked>
+                                    <span class="checkmark"></span>
+                                    User registration notifications
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="security" class="tab-content">
+                        <div class="settings-group">
+                            <h3>Security Settings</h3>
+                            <div class="form-group">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="twoFactorAuth" checked>
+                                    <span class="checkmark"></span>
+                                    Enable two-factor authentication
+                                </label>
+                            </div>
+                            <div class="form-group">
+                                <label>Session Timeout (minutes):</label>
+                                <input type="number" id="sessionTimeout" value="30" min="5" max="1440">
+                            </div>
+                            <div class="form-group">
+                                <button class="btn btn-primary" onclick="changePassword()">Change Password</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="settings-actions">
+                    <button class="btn btn-primary" onclick="saveSettings()">Save Settings</button>
+                    <button class="btn btn-secondary" onclick="resetSettings()">Reset to Default</button>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Modals -->
+    <div id="bookingModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Booking Details</h3>
+                <button class="close-btn" onclick="closeModal('bookingModal')">&times;</button>
+            </div>
+            <div class="modal-body" id="bookingModalBody">
+                <!-- Booking details will be populated here -->
+            </div>
+        </div>
+    </div>
+
+    <div id="busModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Bus Details</h3>
+                <button class="close-btn" onclick="closeModal('busModal')">&times;</button>
+            </div>
+            <div class="modal-body" id="busModalBody">
+                <!-- Bus details will be populated here -->
+            </div>
+        </div>
+    </div>
+
+    <div id="userModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>User Details</h3>
+                <button class="close-btn" onclick="closeModal('userModal')">&times;</button>
+            </div>
+            <div class="modal-body" id="userModalBody">
+                <!-- User details will be populated here -->
+            </div>
+        </div>
+    </div>
+
+    <script src="admin.js"></script>
+</body>
+</html>

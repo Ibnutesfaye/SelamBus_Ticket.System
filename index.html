@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SelamBus - Book Your Bus Tickets Online</title>
+    <meta name="description" content="Book bus tickets online in Ethiopia. Secure, fast, and convenient bus booking for routes across Ethiopia.">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- Preload hero background image -->
+    <link rel="preload" as="image" href="images/Selam-Bus.jpg">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="nav-logo">
+                    <h1><i class="fas fa-bus"></i> SelamBus</h1>
+                </div>
+                <div class="nav-menu">
+                    <a href="#home" class="nav-link" data-i18n="nav.home">Home</a>
+                    <a href="#about" class="nav-link" data-i18n="nav.about">About</a>
+                    <a href="#contact" class="nav-link" data-i18n="nav.contact">Contact</a>
+                    <a href="#help" class="nav-link" data-i18n="nav.help">Help</a>
+                </div>
+                <div class="nav-actions">
+                    <button class="btn-login" data-i18n="nav.login">Login</button>
+                    <button class="btn-register" data-i18n="nav.register">Register</button>
+                    <div class="language-selector">
+                        <select id="language">
+                            <option value="en">English</option>
+                            <option value="am">አማርኛ</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="mobile-menu-toggle">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    <span data-i18n="hero.title">Book Your Bus Tickets Online</span>
+                    <span class="hero-subtitle" data-i18n="hero.subtitle">Fast, Secure & Convenient</span>
+                </h1>
+                <p class="hero-description">
+                    <span data-i18n="hero.description">Travel across Ethiopia with ease. Book your bus tickets in minutes and enjoy a comfortable journey with trusted bus operators.</span>
+                </p>
+            </div>
+            
+            <!-- Search Form -->
+            <div class="search-form-container">
+                <form id="busSearchForm" class="search-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="fromCity" data-i18n="search.from.label">From</label>
+                            <div class="input-container">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <input type="text" id="fromCity" name="fromCity" placeholder="Departure city" data-i18n-placeholder="search.from.placeholder" required>
+                                <div class="suggestions" id="fromSuggestions"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="toCity" data-i18n="search.to.label">To</label>
+                            <div class="input-container">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <input type="text" id="toCity" name="toCity" placeholder="Destination city" data-i18n-placeholder="search.to.placeholder" required>
+                                <div class="suggestions" id="toSuggestions"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="departureDate" data-i18n="search.departure.label">Departure Date</label>
+                            <div class="input-container">
+                                <i class="fas fa-calendar-alt"></i>
+                                <input type="date" id="departureDate" name="departureDate" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="returnDate" data-i18n="search.return.label">Return Date (Optional)</label>
+                            <div class="input-container">
+                                <i class="fas fa-calendar-alt"></i>
+                                <input type="date" id="returnDate" name="returnDate">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="submit" class="btn-search">
+                            <i class="fas fa-search"></i>
+                            <span class="i18n-search" data-i18n="search.search_button">Search Buses</span>
+                        </button>
+                        <button type="button" class="btn-round-trip" id="roundTripToggle">
+                            <i class="fas fa-exchange-alt" id="roundIcon"></i>
+                            <span class="round-label" data-i18n="search.round_trip_button">Round Trip</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <div class="hero-background">
+            <div class="hero-overlay"></div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about-section">
+        <div class="container">
+            <h2 class="section-title">About Us</h2>
+            <div class="about-grid">
+                <div class="about-text">
+                    <p>
+                        SelamBus is a modern platform that makes bus travel in Ethiopia simple and reliable.
+                        We connect travelers with trusted bus operators, offering easy search, seat selection,
+                        and secure payments. Our mission is to bring convenience and transparency to intercity travel.
+                    </p>
+                    <p>
+                        Whether you’re planning a quick visit or a long journey, SelamBus helps you compare routes,
+                        reserve seats, and manage bookings — all in one place.
+                    </p>
+                </div>
+                <div class="about-highlights">
+                    <ul>
+                        <li><i class="fas fa-check-circle"></i> Trusted operators across major routes</li>
+                        <li><i class="fas fa-check-circle"></i> Secure payments (TeleBirr, CBE Birr)</li>
+                        <li><i class="fas fa-check-circle"></i> Real-time seat selection</li>
+                        <li><i class="fas fa-check-circle"></i> Customer-first support</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Popular Routes Section -->
+    <section class="popular-routes">
+        <div class="container">
+            <h2 class="section-title" data-i18n="routes.section_title">Popular Routes</h2>
+            <div class="routes-grid">
+                <div class="route-card">
+                    <div class="route-info">
+                        <h3>Addis Ababa → Adama</h3>
+                        <p>Starting from <span class="price">ETB 150</span></p>
+                        <small>2 hours journey</small>
+                    </div>
+                    <button class="btn-book-route" data-i18n="routes.book_now">Book Now</button>
+                </div>
+                
+                <div class="route-card">
+                    <div class="route-info">
+                        <h3>Addis Ababa → Hawassa</h3>
+                        <p>Starting from <span class="price">ETB 250</span></p>
+                        <small>5 hours journey</small>
+                    </div>
+                    <button class="btn-book-route" data-i18n="routes.book_now">Book Now</button>
+                </div>
+                
+                <div class="route-card">
+                    <div class="route-info">
+                        <h3>Addis Ababa → Bahir Dar</h3>
+                        <p>Starting from <span class="price">ETB 350</span></p>
+                        <small>8 hours journey</small>
+                    </div>
+                    <button class="btn-book-route" data-i18n="routes.book_now">Book Now</button>
+                </div>
+                
+                <div class="route-card">
+                    <div class="route-info">
+                        <h3>Addis Ababa → Gondar</h3>
+                        <p>Starting from <span class="price">ETB 400</span></p>
+                        <small>10 hours journey</small>
+                    </div>
+                    <button class="btn-book-route" data-i18n="routes.book_now">Book Now</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Help & FAQs Section -->
+    <section id="help" class="help-section">
+        <div class="container">
+            <h2 class="section-title">Help & FAQs</h2>
+            <div class="faq">
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>How do I book a ticket?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Use the search form to select your cities and dates, pick a bus on the results page, select seats, enter passenger details, and proceed to payment.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>Which payment methods are supported?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>We support TeleBirr, CBE Birr, and bank transfer. More options will be added soon.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>Can I cancel or change my booking?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Cancellation and changes depend on the bus operator’s policy. Check your booking confirmation page for available options.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="how-it-works">
+        <div class="container">
+            <h2 class="section-title" data-i18n="how.section_title">How It Works</h2>
+            <div class="steps-container">
+                <div class="step">
+                    <div class="step-icon">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <h3 data-i18n="how.step1.title">1. Search</h3>
+                    <p data-i18n="how.step1.desc">Enter your departure and destination cities, select your travel dates</p>
+                </div>
+                
+                <div class="step">
+                    <div class="step-icon">
+                        <i class="fas fa-chair"></i>
+                    </div>
+                    <h3 data-i18n="how.step2.title">2. Select</h3>
+                    <p data-i18n="how.step2.desc">Choose your preferred bus, seat, and enter passenger details</p>
+                </div>
+                
+                <div class="step">
+                    <div class="step-icon">
+                        <i class="fas fa-credit-card"></i>
+                    </div>
+                    <h3 data-i18n="how.step3.title">3. Pay</h3>
+                    <p data-i18n="how.step3.desc">Pay securely using TeleBirr, CBE Birr, or bank transfer</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact-section">
+        <div class="container">
+            <h2 class="section-title">Contact Us</h2>
+            <div class="contact-grid">
+                <form id="contactForm" class="contact-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="contactName">Your Name</label>
+                            <input type="text" id="contactName" name="contactName" placeholder="Full name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="contactEmail">Email</label>
+                            <input type="email" id="contactEmail" name="contactEmail" placeholder="you@example.com" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="contactPhone">Phone</label>
+                            <input type="tel" id="contactPhone" name="contactPhone" placeholder="+251..." required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="contactMessage">Message</label>
+                        <textarea id="contactMessage" name="contactMessage" rows="5" placeholder="Tell us how we can help" required></textarea>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn-search"><i class="fas fa-paper-plane"></i> Send Message</button>
+                    </div>
+                </form>
+                <div class="contact-info">
+                    <div class="info-item"><i class="fas fa-phone"></i> +251 111 234 567</div>
+                    <div class="info-item"><i class="fas fa-envelope"></i> support@selambus.com</div>
+                    <div class="info-item"><i class="fas fa-map-marker-alt"></i> Addis Ababa, Ethiopia</div>
+                    <div class="info-item"><i class="fas fa-clock"></i> Mon–Fri: 9:00–18:00</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Customer Testimonials -->
+    <section class="testimonials">
+        <div class="container">
+            <h2 class="section-title">What Our Customers Say</h2>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p>"Booking bus tickets has never been easier! The website is user-friendly and payment through TeleBirr is seamless."</p>
+                    <div class="customer-info">
+                        <strong>Abdurezak Tesfaye</strong>
+                        <small>Regular Traveler</small>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p>"I love the seat selection feature. I can choose my preferred seat and see exactly where I'll be sitting."</p>
+                    <div class="customer-info">
+                        <strong>Fatima Ahmed</strong>
+                        <small>Student</small>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p>"The mobile app is fantastic! I can book tickets on the go and never miss a bus again."</p>
+                    <div class="customer-info">
+                        <strong>Mohammed Ali</strong>
+                        <small>Business Traveler</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mobile App Promotion -->
+    <section class="mobile-app">
+        <div class="container">
+            <div class="app-content">
+                <div class="app-info">
+                    <h2>Download Our Mobile App</h2>
+                    <p>Book tickets faster, get exclusive deals, and track your journey in real-time</p>
+                    <div class="app-buttons">
+                        <button class="app-btn">
+                            <i class="fab fa-google-play"></i>
+                            <span>Google Play</span>
+                        </button>
+                        <button class="app-btn">
+                            <i class="fab fa-apple"></i>
+                            <span>App Store</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="app-image">
+                    <i class="fas fa-mobile-alt"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>SelamBus</h3>
+                    <p>Your trusted partner for bus travel in Ethiopia. Safe, secure, and convenient booking platform.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-telegram"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                        <li><a href="#help">FAQs</a></li>
+                        <li><a href="#">Terms & Conditions</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Refund Policy</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Cancellation</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Contact Info</h4>
+                    <p><i class="fas fa-phone"></i> +251 111 234 567</p>
+                    <p><i class="fas fa-envelope"></i> support@selambus.com</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Addis Ababa, Ethiopia</p>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 SelamBus. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="script.js"></script>
+</body>
+</html>

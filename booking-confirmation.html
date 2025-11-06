@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Confirmed - SelamBus</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="booking-confirmation.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="nav-brand">
+                    <i class="fas fa-bus"></i>
+                    <span>SelamBus</span>
+                </div>
+                <div class="nav-menu">
+                    <a href="index.html" class="nav-link">Home</a>
+                    <a href="search-results.html" class="nav-link">Search</a>
+                    <a href="profile.html" class="nav-link">My Account</a>
+                </div>
+                <div class="nav-toggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Booking Confirmation Section -->
+    <section class="confirmation-section">
+        <div class="container">
+            <!-- Success Message -->
+            <div class="success-header">
+                <div class="success-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <h1>Booking Confirmed!</h1>
+                <p>Your bus ticket has been successfully booked. Please save your booking details.</p>
+            </div>
+
+            <!-- Booking Details Card -->
+            <div class="booking-card">
+                <div class="card-header">
+                    <div class="booking-reference">
+                        <span class="label">Booking Reference:</span>
+                        <span class="reference-number" id="bookingReference">SLM-241215-ABCD</span>
+                    </div>
+                    <div class="booking-status">
+                        <span class="status-badge confirmed">Confirmed</span>
+                    </div>
+                </div>
+
+                <!-- QR Code Section -->
+                <div class="qr-section">
+                    <div class="qr-code">
+                        <div id="qrcode"></div>
+                        <p class="qr-text">Show this QR code at the terminal</p>
+                    </div>
+                </div>
+
+                <!-- Trip Details -->
+                <div class="trip-details">
+                    <div class="trip-header">
+                        <h3>Trip Details</h3>
+                        <div class="trip-date" id="tripDate">December 15, 2024</div>
+                    </div>
+                    
+                    <div class="route-info">
+                        <div class="departure-info">
+                            <div class="city" id="departureCity">Addis Ababa</div>
+                            <div class="terminal" id="departureTerminal">Autobus Tera</div>
+                            <div class="time" id="departureTime">08:00 AM</div>
+                        </div>
+                        
+                        <div class="route-arrow">
+                            <i class="fas fa-arrow-right"></i>
+                        </div>
+                        
+                        <div class="arrival-info">
+                            <div class="city" id="arrivalCity">Hawassa</div>
+                            <div class="terminal" id="arrivalTerminal">Main Terminal</div>
+                            <div class="time" id="arrivalTime">12:30 PM</div>
+                        </div>
+                    </div>
+
+                    <div class="bus-info">
+                        <div class="bus-company">
+                            <img src="https://via.placeholder.com/50x50/2563eb/ffffff?text=SB" alt="Selam Bus" class="company-logo">
+                            <div class="company-details">
+                                <div class="company-name" id="companyName">Selam Bus</div>
+                                <div class="bus-type" id="busType">Business Class</div>
+                            </div>
+                        </div>
+                        <div class="trip-duration">
+                            <span id="duration">4h 30m</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Passengers -->
+                <div class="passengers-section">
+                    <h3>Passengers</h3>
+                    <div class="passengers-list" id="passengersList">
+                        <!-- Passengers will be populated by JavaScript -->
+                    </div>
+                </div>
+
+                <!-- Payment Summary -->
+                <div class="payment-summary">
+                    <h3>Payment Summary</h3>
+                    <div class="payment-details">
+                        <div class="payment-item">
+                            <span>Base Fare</span>
+                            <span id="baseFare">ETB 180</span>
+                        </div>
+                        <div class="payment-item">
+                            <span>Taxes & Fees</span>
+                            <span id="taxes">ETB 54</span>
+                        </div>
+                        <div class="payment-item">
+                            <span>Convenience Fee</span>
+                            <span id="convenienceFee">ETB 10</span>
+                        </div>
+                        <div class="payment-item total">
+                            <span>Total Paid</span>
+                            <span id="totalPaid">ETB 424</span>
+                        </div>
+                    </div>
+                    <div class="payment-method">
+                        <span class="method-label">Payment Method:</span>
+                        <span class="method-name" id="paymentMethod">TeleBirr</span>
+                    </div>
+                </div>
+
+                <!-- Important Information -->
+                <div class="important-info">
+                    <h3>Important Information</h3>
+                    <div class="info-items">
+                        <div class="info-item">
+                            <i class="fas fa-clock"></i>
+                            <div>
+                                <strong>Arrive Early</strong>
+                                <p>Please arrive at the terminal at least 30 minutes before departure time.</p>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-id-card"></i>
+                            <div>
+                                <strong>Carry ID</strong>
+                                <p>Bring a valid government-issued ID for verification.</p>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-phone"></i>
+                            <div>
+                                <strong>Contact Us</strong>
+                                <p>For any assistance, call: +251 911 123456</p>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <div>
+                                <strong>Cancellation Policy</strong>
+                                <p>Cancellations allowed up to 24 hours before departure. Contact customer support.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="action-buttons">
+                <button class="btn btn-download" id="downloadTicket">
+                    <i class="fas fa-download"></i>
+                    Download Ticket
+                </button>
+                <button class="btn btn-email" id="emailTicket">
+                    <i class="fas fa-envelope"></i>
+                    Email Ticket
+                </button>
+                <button class="btn btn-sms" id="smsTicket">
+                    <i class="fas fa-sms"></i>
+                    Send SMS
+                </button>
+                <button class="btn btn-primary" id="newBooking">
+                    <i class="fas fa-plus"></i>
+                    New Booking
+                </button>
+            </div>
+
+            <!-- Booking Actions -->
+            <div class="booking-actions">
+                <button class="btn btn-secondary" id="viewBookings">
+                    <i class="fas fa-list"></i>
+                    View All Bookings
+                </button>
+                <button class="btn btn-danger" id="cancelBooking">
+                    <i class="fas fa-times"></i>
+                    Cancel Booking
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <div class="footer-brand">
+                    <i class="fas fa-bus"></i>
+                    <span>SelamBus</span>
+                </div>
+                <p>Your trusted partner for bus travel in Ethiopia.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="search-results.html">Search Buses</a></li>
+                    <li><a href="profile.html">My Account</a></li>
+                    <li><a href="#">About Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Support</h4>
+                <ul>
+                    <li><a href="#">Help Center</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Contact Info</h4>
+                <div class="contact-item">
+                    <i class="fas fa-phone"></i>
+                    <span>+251 911 123456</span>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-envelope"></i>
+                    <span>support@selambus.com</span>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>Addis Ababa, Ethiopia</span>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 SelamBus. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-content">
+            <div class="spinner"></div>
+            <p>Processing your request...</p>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div class="modal" id="successModal">
+        <div class="modal-content">
+            <div class="success-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h3>Success!</h3>
+            <p id="successMessage">Your ticket has been sent successfully.</p>
+            <button class="btn btn-primary" onclick="closeModal()">OK</button>
+        </div>
+    </div>
+
+    <!-- Error Modal -->
+    <div class="modal" id="errorModal">
+        <div class="modal-content">
+            <div class="error-icon">
+                <i class="fas fa-times-circle"></i>
+            </div>
+            <h3>Error</h3>
+            <p id="errorMessage">Something went wrong. Please try again.</p>
+            <button class="btn btn-primary" onclick="closeModal()">OK</button>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="booking-confirmation.js"></script>
+</body>
+</html>

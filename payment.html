@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment - SelamBus</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="payment.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="nav-brand">
+                <i class="fas fa-bus"></i>
+                <h1>SelamBus</h1>
+            </div>
+            <nav class="nav-menu">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="search-results.html" class="nav-link">Search</a>
+                <a href="#" class="nav-link">My Bookings</a>
+                <a href="#" class="nav-link">Contact</a>
+            </nav>
+            <div class="nav-actions">
+                <button class="btn-language" onclick="toggleLanguage()">
+                    <i class="fas fa-globe"></i>
+                    <span id="currentLang">EN</span>
+                </button>
+                <button class="btn-account" onclick="showLogin()">
+                    <i class="fas fa-user"></i>
+                    <span id="loginText">Login</span>
+                </button>
+            </div>
+            <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Payment Section -->
+    <section class="payment-section">
+        <div class="container">
+            <div class="payment-header">
+                <h1 id="paymentTitle">Secure Payment</h1>
+                <div class="security-badges">
+                    <div class="badge">
+                        <i class="fas fa-lock"></i>
+                        <span>SSL Secured</span>
+                    </div>
+                    <div class="badge">
+                        <i class="fas fa-shield-alt"></i>
+                        <span>PCI Compliant</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="payment-content">
+                <!-- Order Summary -->
+                <div class="order-summary">
+                    <div class="summary-header">
+                        <h3 id="orderSummaryTitle">Order Summary</h3>
+                        <button class="btn-edit" onclick="editBooking()">
+                            <i class="fas fa-edit"></i>
+                            <span id="editText">Edit</span>
+                        </button>
+                    </div>
+                    
+                    <div class="booking-details">
+                        <div class="route-info">
+                            <div class="departure">
+                                <div class="city">Addis Ababa</div>
+                                <div class="terminal">Autobus Tera</div>
+                                <div class="datetime">Dec 15, 2024 • 08:00</div>
+                            </div>
+                            <div class="arrow">
+                                <i class="fas fa-arrow-right"></i>
+                            </div>
+                            <div class="arrival">
+                                <div class="city">Hawassa</div>
+                                <div class="terminal">Main Terminal</div>
+                                <div class="datetime">Dec 15, 2024 • 12:30</div>
+                            </div>
+                        </div>
+                        
+                        <div class="bus-info">
+                            <div class="company">
+                                <img src="https://via.placeholder.com/40x40/2563eb/ffffff?text=SB" alt="Selam Bus" class="company-logo">
+                                <div class="company-details">
+                                    <div class="name">Selam Bus</div>
+                                    <div class="type">Business Class</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="passenger-list">
+                            <h4 id="passengersTitle">Passengers</h4>
+                            <div class="passenger-item">
+                                <div class="passenger-info">
+                                    <div class="name">Abebe Kebede</div>
+                                    <div class="details">Seat A1 • Male • 35 years</div>
+                                </div>
+                                <div class="passenger-price">ETB 180</div>
+                            </div>
+                            <div class="passenger-item">
+                                <div class="passenger-info">
+                                    <div class="name">Marta Abebe</div>
+                                    <div class="details">Seat A2 • Female • 32 years</div>
+                                </div>
+                                <div class="passenger-price">ETB 180</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="price-breakdown">
+                        <div class="price-item">
+                            <span id="fareText">Bus Fare (2 passengers)</span>
+                            <span class="price">ETB 360</span>
+                        </div>
+                        <div class="price-item">
+                            <span id="taxText">Service Tax (15%)</span>
+                            <span class="price">ETB 54</span>
+                        </div>
+                        <div class="price-item">
+                            <span id="convenienceText">Convenience Fee</span>
+                            <span class="price">ETB 10</span>
+                        </div>
+                        <div class="price-item total">
+                            <span id="totalText">Total Amount</span>
+                            <span class="price">ETB 424</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Payment Methods -->
+                <div class="payment-methods">
+                    <div class="payment-header">
+                        <h3 id="paymentMethodTitle">Choose Payment Method</h3>
+                        <div class="payment-icons">
+                            <i class="fab fa-cc-visa"></i>
+                            <i class="fab fa-cc-mastercard"></i>
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                    </div>
+
+                    <div class="payment-options">
+                        <!-- TeleBirr -->
+                        <div class="payment-option" data-method="telebirr">
+                            <div class="option-header">
+                                <div class="radio-group">
+                                    <input type="radio" id="telebirr" name="paymentMethod" value="telebirr" checked>
+                                    <label for="telebirr">
+                                        <div class="payment-logo">
+                                            <img src="https://via.placeholder.com/60x40/2563eb/ffffff?text=TB" alt="TeleBirr">
+                                        </div>
+                                        <div class="payment-info">
+                                            <div class="payment-name">TeleBirr</div>
+                                            <div class="payment-description">Pay with your TeleBirr account</div>
+                                            <div class="payment-fee">No additional fee</div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="payment-form" id="telebirrForm">
+                                <div class="form-group">
+                                    <label for="telebirrNumber">TeleBirr Phone Number</label>
+                                    <input type="tel" id="telebirrNumber" placeholder="09XXXXXXXX" maxlength="10" pattern="09[0-9]{8}">
+                                    <small>Enter your registered TeleBirr phone number</small>
+                                </div>
+                                <div class="form-group">
+                                    <label for="telebirrPin">TeleBirr PIN</label>
+                                    <input type="password" id="telebirrPin" placeholder="Enter 4-digit PIN" maxlength="4" pattern="[0-9]{4}">
+                                    <small>Your TeleBirr transaction PIN</small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- CBE Birr -->
+                        <div class="payment-option" data-method="cbebirr">
+                            <div class="option-header">
+                                <div class="radio-group">
+                                    <input type="radio" id="cbebirr" name="paymentMethod" value="cbebirr">
+                                    <label for="cbebirr">
+                                        <div class="payment-logo">
+                                            <img src="https://via.placeholder.com/60x40/059669/ffffff?text=CBE" alt="CBE Birr">
+                                        </div>
+                                        <div class="payment-info">
+                                            <div class="payment-name">CBE Birr</div>
+                                            <div class="payment-description">Pay with CBE Birr mobile money</div>
+                                            <div class="payment-fee">No additional fee</div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="payment-form" id="cbebirrForm" style="display: none;">
+                                <div class="form-group">
+                                    <label for="cbeNumber">CBE Birr Phone Number</label>
+                                    <input type="tel" id="cbeNumber" placeholder="09XXXXXXXX" maxlength="10" pattern="09[0-9]{8}">
+                                    <small>Enter your registered CBE Birr phone number</small>
+                                </div>
+                                <div class="form-group">
+                                    <label for="cbePin">CBE Birr PIN</label>
+                                    <input type="password" id="cbePin" placeholder="Enter 4-digit PIN" maxlength="4" pattern="[0-9]{4}">
+                                    <small>Your CBE Birr transaction PIN</small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Credit/Debit Card -->
+                        <div class="payment-option" data-method="card">
+                            <div class="option-header">
+                                <div class="radio-group">
+                                    <input type="radio" id="card" name="paymentMethod" value="card">
+                                    <label for="card">
+                                        <div class="payment-logo">
+                                            <i class="fas fa-credit-card"></i>
+                                        </div>
+                                        <div class="payment-info">
+                                            <div class="payment-name">Credit/Debit Card</div>
+                                            <div class="payment-description">Pay with Visa, Mastercard</div>
+                                            <div class="payment-fee">+2.5% processing fee</div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="payment-form" id="cardForm" style="display: none;">
+                                <div class="form-group">
+                                    <label for="cardNumber">Card Number</label>
+                                    <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456" maxlength="19">
+                                    <small>Enter your 16-digit card number</small>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="expiryDate">Expiry Date</label>
+                                        <input type="text" id="expiryDate" placeholder="MM/YY" maxlength="5">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="cvv">CVV</label>
+                                        <input type="text" id="cvv" placeholder="123" maxlength="3">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="cardholderName">Cardholder Name</label>
+                                    <input type="text" id="cardholderName" placeholder="Full Name">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Bank Transfer -->
+                        <div class="payment-option" data-method="bank">
+                            <div class="option-header">
+                                <div class="radio-group">
+                                    <input type="radio" id="bank" name="paymentMethod" value="bank">
+                                    <label for="bank">
+                                        <div class="payment-logo">
+                                            <i class="fas fa-university"></i>
+                                        </div>
+                                        <div class="payment-info">
+                                            <div class="payment-name">Bank Transfer</div>
+                                            <div class="payment-description">Manual bank transfer</div>
+                                            <div class="payment-fee">No additional fee</div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="payment-form" id="bankForm" style="display: none;">
+                                <div class="bank-details">
+                                    <h4 id="bankDetailsTitle">Bank Transfer Details</h4>
+                                    <div class="bank-info">
+                                        <div class="bank-item">
+                                            <span class="label">Bank Name:</span>
+                                            <span class="value">Commercial Bank of Ethiopia</span>
+                                        </div>
+                                        <div class="bank-item">
+                                            <span class="label">Account Name:</span>
+                                            <span class="value">SelamBus Travel Services</span>
+                                        </div>
+                                        <div class="bank-item">
+                                            <span class="label">Account Number:</span>
+                                            <span class="value">1000123456789</span>
+                                        </div>
+                                        <div class="bank-item">
+                                            <span class="label">Reference:</span>
+                                            <span class="value" id="bankReference">SLM-2024-1215-001</span>
+                                        </div>
+                                    </div>
+                                    <div class="upload-section">
+                                        <label for="bankReceipt">Upload Payment Receipt</label>
+                                        <input type="file" id="bankReceipt" accept="image/*,.pdf">
+                                        <small>Upload a clear image or PDF of your bank transfer receipt</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Payment Security Notice -->
+                    <div class="security-notice">
+                        <i class="fas fa-shield-alt"></i>
+                        <div class="notice-content">
+                            <h4 id="securityTitle">Your Payment is Secure</h4>
+                            <p id="securityText">All payment information is encrypted and processed securely. We never store your payment details.</p>
+                        </div>
+                    </div>
+
+                    <!-- Payment Actions -->
+                    <div class="payment-actions">
+                        <button type="button" class="btn-back" onclick="goBack()">
+                            <i class="fas fa-arrow-left"></i>
+                            <span id="backText">Back</span>
+                        </button>
+                        <button type="button" class="btn-pay" onclick="processPayment()">
+                            <i class="fas fa-lock"></i>
+                            <span id="payText">Pay ETB 424</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-brand">
+                        <i class="fas fa-bus"></i>
+                        <h3>SelamBus</h3>
+                    </div>
+                    <p id="footerDesc">Your trusted partner for bus travel in Ethiopia. Safe, reliable, and convenient booking.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-telegram"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h4 id="quickLinksTitle">Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html" id="homeLink">Home</a></li>
+                        <li><a href="#" id="searchLink">Search Buses</a></li>
+                        <li><a href="#" id="aboutLink">About Us</a></li>
+                        <li><a href="#" id="contactLink">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4 id="supportTitle">Support</h4>
+                    <ul>
+                        <li><a href="#" id="helpLink">Help Center</a></li>
+                        <li><a href="#" id="termsLink">Terms of Service</a></li>
+                        <li><a href="#" id="privacyLink">Privacy Policy</a></li>
+                        <li><a href="#" id="refundLink">Refund Policy</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4 id="contactTitle">Contact Us</h4>
+                    <div class="contact-info">
+                        <p><i class="fas fa-phone"></i> +251 911 234 567</p>
+                        <p><i class="fas fa-envelope"></i> support@selambus.com</p>
+                        <p><i class="fas fa-map-marker-alt"></i> Addis Ababa, Ethiopia</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p id="copyright">&copy; 2024 SelamBus. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-content">
+            <div class="spinner"></div>
+            <p id="loadingText">Processing your payment...</p>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div class="modal" id="successModal">
+        <div class="modal-content">
+            <div class="success-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h3 id="successTitle">Payment Successful!</h3>
+            <p id="successText">Your booking has been confirmed. You will receive a confirmation message shortly.</p>
+            <div class="modal-actions">
+                <button class="btn-primary" onclick="goToBookingConfirmation()">
+                    <span id="viewTicketText">View Ticket</span>
+                </button>
+                <button class="btn-secondary" onclick="closeModal()">
+                    <span id="closeText">Close</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Error Modal -->
+    <div class="modal" id="errorModal">
+        <div class="modal-content">
+            <div class="error-icon">
+                <i class="fas fa-exclamation-circle"></i>
+            </div>
+            <h3 id="errorTitle">Payment Failed</h3>
+            <p id="errorText">There was an error processing your payment. Please try again or use a different payment method.</p>
+            <div class="modal-actions">
+                <button class="btn-primary" onclick="retryPayment()">
+                    <span id="retryText">Retry</span>
+                </button>
+                <button class="btn-secondary" onclick="closeModal()">
+                    <span id="closeErrorText">Close</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="payment.js"></script>
+</body>
+</html>

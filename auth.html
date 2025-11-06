@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - SelamBus</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="auth.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="auth-container">
+        <!-- Header -->
+        <header class="auth-header">
+            <div class="auth-logo">
+                <h1><i class="fas fa-bus"></i> SelamBus</h1>
+                <p>Your Journey Starts Here</p>
+            </div>
+        </header>
+
+        <!-- Auth Forms Container -->
+        <div class="auth-forms-container">
+            <!-- Login Form -->
+            <div class="auth-form login-form active" id="loginForm">
+                <div class="form-header">
+                    <h2>Welcome Back</h2>
+                    <p>Sign in to your account to continue booking</p>
+                </div>
+
+                <form id="loginFormElement">
+                    <div class="form-group">
+                        <label for="loginEmail">Email or Phone Number</label>
+                        <div class="input-group">
+                            <i class="fas fa-envelope"></i>
+                            <input type="text" id="loginEmail" name="email" placeholder="Email or phone number" autocomplete="username" required>
+                        </div>
+                        <div class="error-message" id="loginEmailError"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="loginPassword">Password</label>
+                        <div class="input-group">
+                            <i class="fas fa-lock"></i>
+                            <input type="password" id="loginPassword" name="password" placeholder="Password" autocomplete="current-password" required>
+                            <button type="button" class="toggle-password" data-target="loginPassword">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                        <div class="error-message" id="loginPasswordError"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="remember-forgot">
+                            <label class="checkbox-container">
+                                <input type="checkbox" id="rememberMe" name="rememberMe">
+                                <span class="checkmark"></span>
+                                Remember me
+                            </label>
+                            <a href="#" class="forgot-password">Forgot Password?</a>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-full">
+                        <span class="btn-text">Sign In</span>
+                        <span class="btn-loading" style="display: none;">
+                            <i class="fas fa-spinner fa-spin"></i> Signing In...
+                        </span>
+                    </button>
+                </form>
+
+                <div class="form-footer">
+                    <p>Don't have an account? <a href="#" class="switch-form" data-form="register">Sign Up</a></p>
+                </div>
+
+                <div class="social-login">
+                    <div class="divider">
+                        <span>Or continue with</span>
+                    </div>
+                    <div class="social-buttons">
+                        <button type="button" class="social-btn google">
+                            <i class="fab fa-google"></i>
+                            Google
+                        </button>
+                        <button type="button" class="social-btn facebook">
+                            <i class="fab fa-facebook-f"></i>
+                            Facebook
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Registration Form -->
+            <div class="auth-form register-form" id="registerForm">
+                <div class="form-header">
+                    <h2>Create Account</h2>
+                    <p>Join SelamBus and start booking your bus tickets</p>
+                </div>
+
+                <form id="registerFormElement">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="firstName">First Name</label>
+                            <div class="input-group">
+                                <i class="fas fa-user"></i>
+                                <input type="text" id="firstName" name="firstName" required>
+                            </div>
+                            <div class="error-message" id="firstNameError"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="lastName">Last Name</label>
+                            <div class="input-group">
+                                <i class="fas fa-user"></i>
+                                <input type="text" id="lastName" name="lastName" required>
+                            </div>
+                            <div class="error-message" id="lastNameError"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="registerEmail">Email Address</label>
+                        <div class="input-group">
+                            <i class="fas fa-envelope"></i>
+                            <input type="email" id="registerEmail" name="email" placeholder="Email address" autocomplete="email" required>
+                        </div>
+                        <div class="error-message" id="registerEmailError"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phoneNumber">Phone Number</label>
+                        <div class="input-group">
+                            <i class="fas fa-phone"></i>
+                            <input type="tel" id="phoneNumber" name="phoneNumber" placeholder="Phone number" autocomplete="tel" required>
+                        </div>
+                        <div class="error-message" id="phoneNumberError"></div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="registerPassword">Password</label>
+                            <div class="input-group">
+                                <i class="fas fa-lock"></i>
+                                <input type="password" id="registerPassword" name="password" placeholder="Create password" autocomplete="new-password" required>
+                                <button type="button" class="toggle-password" data-target="registerPassword">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                            <div class="error-message" id="registerPasswordError"></div>
+                            <div class="password-strength" id="passwordStrength"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="confirmPassword">Confirm Password</label>
+                            <div class="input-group">
+                                <i class="fas fa-lock"></i>
+                                <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm password" autocomplete="new-password" required>
+                                <button type="button" class="toggle-password" data-target="confirmPassword">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                            <div class="error-message" id="confirmPasswordError"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="checkbox-container">
+                            <input type="checkbox" id="terms" name="terms" required>
+                            <span class="checkmark"></span>
+                            I agree to the <a href="#" class="terms-link">Terms of Service</a> and <a href="#" class="terms-link">Privacy Policy</a>
+                        </label>
+                        <div class="error-message" id="termsError"></div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-full">
+                        <span class="btn-text">Create Account</span>
+                        <span class="btn-loading" style="display: none;">
+                            <i class="fas fa-spinner fa-spin"></i> Creating Account...
+                        </span>
+                    </button>
+                </form>
+
+                <div class="form-footer">
+                    <p>Already have an account? <a href="#" class="switch-form" data-form="login">Sign In</a></p>
+                </div>
+
+                <div class="social-login">
+                    <div class="divider">
+                        <span>Or continue with</span>
+                    </div>
+                    <div class="social-buttons">
+                        <button type="button" class="social-btn google">
+                            <i class="fab fa-google"></i>
+                            Google
+                        </button>
+                        <button type="button" class="social-btn facebook">
+                            <i class="fab fa-facebook-f"></i>
+                            Facebook
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Forgot Password Form -->
+            <div class="auth-form forgot-password-form" id="forgotPasswordForm">
+                <div class="form-header">
+                    <h2>Forgot Password</h2>
+                    <p>Enter your email address and we'll send you instructions to reset your password</p>
+                </div>
+
+                <form id="forgotPasswordFormElement">
+                    <div class="form-group">
+                        <label for="resetEmail">Email Address</label>
+                        <div class="input-group">
+                            <i class="fas fa-envelope"></i>
+                            <input type="email" id="resetEmail" name="email" required>
+                        </div>
+                        <div class="error-message" id="resetEmailError"></div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-full">
+                        <span class="btn-text">Send Reset Instructions</span>
+                        <span class="btn-loading" style="display: none;">
+                            <i class="fas fa-spinner fa-spin"></i> Sending...
+                        </span>
+                    </button>
+                </form>
+
+                <div class="form-footer">
+                    <p>Remember your password? <a href="#" class="switch-form" data-form="login">Sign In</a></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="auth-footer">
+            <div class="auth-links">
+                <a href="index.html">Home</a>
+                <a href="#">About</a>
+                <a href="#">Contact</a>
+                <a href="#">Help</a>
+            </div>
+            <p>&copy; 2024 SelamBus. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay">
+        <div class="loading-content">
+            <div class="spinner"></div>
+            <p id="loadingText">Processing...</p>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div id="successModal" class="modal">
+        <div class="modal-content">
+            <div class="success-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h3 id="successTitle">Success!</h3>
+            <p id="successMessage">Your request has been processed successfully.</p>
+            <button class="btn btn-primary" onclick="closeModal('successModal')">Continue</button>
+        </div>
+    </div>
+
+    <!-- Error Modal -->
+    <div id="errorModal" class="modal">
+        <div class="modal-content">
+            <div class="error-icon">
+                <i class="fas fa-times-circle"></i>
+            </div>
+            <h3 id="errorTitle">Error!</h3>
+            <p id="errorMessage">Something went wrong. Please try again.</p>
+            <button class="btn btn-primary" onclick="closeModal('errorModal')">OK</button>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="auth.js"></script>
+</body>
+</html>

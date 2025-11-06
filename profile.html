@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile - SelamBus</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="profile.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav-container">
+            <div class="nav-brand">
+                <a href="index.html" class="logo">
+                    <i class="fas fa-bus"></i>
+                    <span>SelamBus</span>
+                </a>
+            </div>
+            <div class="nav-menu" id="navMenu">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="search-results.html" class="nav-link">Book Bus</a>
+                <a href="profile.html" class="nav-link active">My Profile</a>
+                <a href="auth.html" class="nav-link">Login</a>
+            </div>
+            <div class="nav-actions">
+                <button class="mobile-menu-toggle" id="mobileMenuToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Profile Header -->
+            <div class="profile-header">
+                <div class="profile-info">
+                    <img src="https://ui-avatars.com/api/?name=John+Doe&background=3b82f6&color=fff&size=128" alt="Profile" class="profile-avatar" id="profileAvatar">
+                    <div class="profile-details">
+                        <h1 id="profileName">Abdu Tesfaye</h1>
+                        <p id="profileEmail">abdurezak@gmail.com</p>
+                        <p id="profilePhone">+251912345678</p>
+                        <div class="profile-actions">
+                            <button class="btn btn-outline" onclick="editProfile()">
+                                <i class="fas fa-edit"></i>
+                                Edit Profile
+                            </button>
+                            <button class="btn btn-outline" onclick="changePassword()">
+                                <i class="fas fa-lock"></i>
+                                Change Password
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="profile-stats">
+                    <div class="stat-item">
+                        <div class="stat-number" id="totalBookings">0</div>
+                        <div class="stat-label">Total Bookings</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" id="completedTrips">0</div>
+                        <div class="stat-label">Completed Trips</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" id="upcomingTrips">0</div>
+                        <div class="stat-label">Upcoming Trips</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Navigation Tabs -->
+            <div class="profile-tabs">
+                <button class="tab-btn active" data-tab="overview">
+                    <i class="fas fa-user"></i>
+                    Overview
+                </button>
+                <button class="tab-btn" data-tab="bookings">
+                    <i class="fas fa-ticket-alt"></i>
+                    My Bookings
+                </button>
+                <button class="tab-btn" data-tab="wallet">
+                    <i class="fas fa-wallet"></i>
+                    Wallet
+                </button>
+                <button class="tab-btn" data-tab="settings">
+                    <i class="fas fa-cog"></i>
+                    Settings
+                </button>
+            </div>
+
+            <!-- Tab Content -->
+            <div class="tab-content active" id="overview">
+                <div class="section">
+                    <h2>Recent Activity</h2>
+                    <div class="activity-list" id="recentActivity">
+                        <!-- Activity items will be populated by JavaScript -->
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2>Quick Actions</h2>
+                    <div class="quick-actions">
+                        <button class="quick-action" onclick="window.location.href='index.html'">
+                            <i class="fas fa-search"></i>
+                            <span>Book New Trip</span>
+                        </button>
+                        <button class="quick-action" onclick="showTab('bookings')">
+                            <i class="fas fa-calendar"></i>
+                            <span>View Bookings</span>
+                        </button>
+                        <button class="quick-action" onclick="showTab('wallet')">
+                            <i class="fas fa-credit-card"></i>
+                            <span>Add Funds</span>
+                        </button>
+                        <button class="quick-action" onclick="downloadTicket()">
+                            <i class="fas fa-download"></i>
+                            <span>Download Ticket</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-content" id="bookings">
+                <div class="section">
+                    <div class="section-header">
+                        <h2>My Bookings</h2>
+                        <div class="booking-filters">
+                            <select class="filter-select" id="bookingStatusFilter">
+                                <option value="">All Status</option>
+                                <option value="pending">Pending</option>
+                                <option value="confirmed">Confirmed</option>
+                                <option value="completed">Completed</option>
+                                <option value="cancelled">Cancelled</option>
+                            </select>
+                            <select class="filter-select" id="bookingDateFilter">
+                                <option value="">All Dates</option>
+                                <option value="upcoming">Upcoming</option>
+                                <option value="past">Past</option>
+                                <option value="this-month">This Month</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="bookings-list" id="bookingsList">
+                        <!-- Bookings will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-content" id="wallet">
+                <div class="section">
+                    <div class="wallet-overview">
+                        <div class="wallet-card">
+                            <div class="wallet-header">
+                                <h3>Available Balance</h3>
+                                <i class="fas fa-wallet"></i>
+                            </div>
+                            <div class="wallet-balance" id="walletBalance">ETB 0.00</div>
+                            <div class="wallet-actions">
+                                <button class="btn btn-primary" onclick="showAddFundsModal()">
+                                    <i class="fas fa-plus"></i>
+                                    Add Funds
+                                </button>
+                                <button class="btn btn-outline" onclick="showWithdrawModal()">
+                                    <i class="fas fa-minus"></i>
+                                    Withdraw
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="wallet-stats">
+                            <div class="wallet-stat">
+                                <div class="stat-label">Total Deposited</div>
+                                <div class="stat-value" id="totalDeposited">ETB 0.00</div>
+                            </div>
+                            <div class="wallet-stat">
+                                <div class="stat-label">Total Spent</div>
+                                <div class="stat-value" id="totalSpent">ETB 0.00</div>
+                            </div>
+                            <div class="wallet-stat">
+                                <div class="stat-label">Last Transaction</div>
+                                <div class="stat-value" id="lastTransaction">-</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h3>Transaction History</h3>
+                    <div class="transactions-list" id="transactionsList">
+                        <!-- Transactions will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-content" id="settings">
+                <div class="section">
+                    <h2>Account Settings</h2>
+                    <form class="settings-form" id="settingsForm">
+                        <div class="form-group">
+                            <label class="form-label">Full Name</label>
+                            <input type="text" class="form-input" id="fullName" value="John Doe">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Email Address</label>
+                            <input type="email" class="form-input" id="email" value="john.doe@email.com">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Phone Number</label>
+                            <input type="tel" class="form-input" id="phone" value="+251912345678">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Preferred Language</label>
+                            <select class="form-select" id="language">
+                                <option value="en">English</option>
+                                <option value="am">አማርኛ (Amharic)</option>
+                                <option value="om">Afaan Oromoo</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Notification Preferences</label>
+                            <div class="checkbox-group">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" class="form-checkbox" id="emailNotifications" checked>
+                                    <span class="checkmark"></span>
+                                    Email notifications
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" class="form-checkbox" id="smsNotifications" checked>
+                                    <span class="checkmark"></span>
+                                    SMS notifications
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" class="form-checkbox" id="bookingReminders" checked>
+                                    <span class="checkmark"></span>
+                                    Booking reminders
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-outline" onclick="resetSettings()">
+                                Reset Changes
+                            </button>
+                            <button type="submit" class="btn btn-primary">
+                                Save Changes
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="section">
+                    <h3>Privacy & Security</h3>
+                    <div class="security-actions">
+                        <button class="btn btn-outline" onclick="changePassword()">
+                            <i class="fas fa-key"></i>
+                            Change Password
+                        </button>
+                        <button class="btn btn-outline" onclick="enableTwoFactor()">
+                            <i class="fas fa-shield-alt"></i>
+                            Enable Two-Factor Authentication
+                        </button>
+                        <button class="btn btn-outline" onclick="viewLoginHistory()">
+                            <i class="fas fa-history"></i>
+                            View Login History
+                        </button>
+                        <button class="btn btn-danger" onclick="deleteAccount()">
+                            <i class="fas fa-trash"></i>
+                            Delete Account
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modals -->
+    <!-- Add Funds Modal -->
+    <div class="modal" id="addFundsModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Add Funds to Wallet</h3>
+                <button class="modal-close" onclick="closeModal('addFundsModal')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="addFundsForm">
+                    <div class="form-group">
+                        <label class="form-label">Amount (ETB)</label>
+                        <input type="number" class="form-input" id="addFundsAmount" min="10" max="10000" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Payment Method</label>
+                        <select class="form-select" id="addFundsMethod" required>
+                            <option value="">Select Payment Method</option>
+                            <option value="telebirr">TeleBirr</option>
+                            <option value="cbebirr">CBE Birr</option>
+                            <option value="card">Credit/Debit Card</option>
+                            <option value="bank">Bank Transfer</option>
+                        </select>
+                    </div>
+                    <div id="paymentDetails" style="display: none;">
+                        <!-- Payment details will be shown based on selected method -->
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline" onclick="closeModal('addFundsModal')">Cancel</button>
+                <button type="submit" class="btn btn-primary" form="addFundsForm">
+                    <i class="fas fa-plus"></i>
+                    Add Funds
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Profile Modal -->
+    <div class="modal" id="editProfileModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Edit Profile</h3>
+                <button class="modal-close" onclick="closeModal('editProfileModal')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="editProfileForm">
+                    <div class="form-group">
+                        <label class="form-label">Full Name</label>
+                        <input type="text" class="form-input" id="editFullName" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Email Address</label>
+                        <input type="email" class="form-input" id="editEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Phone Number</label>
+                        <input type="tel" class="form-input" id="editPhone" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Profile Picture</label>
+                        <input type="file" class="form-input" id="editAvatar" accept="image/*">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline" onclick="closeModal('editProfileModal')">Cancel</button>
+                <button type="submit" class="btn btn-primary" form="editProfileForm">
+                    <i class="fas fa-save"></i>
+                    Save Changes
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Change Password Modal -->
+    <div class="modal" id="changePasswordModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Change Password</h3>
+                <button class="modal-close" onclick="closeModal('changePasswordModal')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="changePasswordForm">
+                    <div class="form-group">
+                        <label class="form-label">Current Password</label>
+                        <input type="password" class="form-input" id="currentPassword" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">New Password</label>
+                        <input type="password" class="form-input" id="newPassword" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Confirm New Password</label>
+                        <input type="password" class="form-input" id="confirmPassword" required>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline" onclick="closeModal('changePasswordModal')">Cancel</button>
+                <button type="submit" class="btn btn-primary" form="changePasswordForm">
+                    <i class="fas fa-key"></i>
+                    Change Password
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>SelamBus</h3>
+                    <p>Your trusted partner for bus travel across Ethiopia. Book your tickets online with ease and convenience.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-telegram"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="search-results.html">Book Bus</a></li>
+                        <li><a href="profile.html">My Profile</a></li>
+                        <li><a href="auth.html">Login</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Popular Routes</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Addis Ababa → Adama</a></li>
+                        <li><a href="#">Addis Ababa → Hawassa</a></li>
+                        <li><a href="#">Addis Ababa → Bahir Dar</a></li>
+                        <li><a href="#">Addis Ababa → Gondar</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact Info</h4>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-phone"></i> +251 911 123 456</li>
+                        <li><i class="fas fa-envelope"></i> info@selambus.com</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Addis Ababa, Ethiopia</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 SelamBus. All rights reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="profile.js"></script>
+</body>
+</html>

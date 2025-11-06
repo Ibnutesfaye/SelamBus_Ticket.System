@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SelamBus — Seat Selection</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <!-- Header -->
+    <header class="site-header">
+        <div class="container header-container">
+            <a href="index.html" class="logo">
+                <span class="logo-mark">🚌</span>
+                <span class="logo-text">SelamBus</span>
+            </a>
+            <nav class="main-nav">
+                <a href="index.html">Home</a>
+                <a href="search-results.html">Search</a>
+                <a href="profile.html">Profile</a>
+                <a href="admin.html">Admin</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="container">
+            <!-- Trip Summary -->
+            <section class="section booking-summary">
+                <h2>Select Your Seats</h2>
+                <div class="summary-row">
+                    <div>
+                        <strong id="tripRoute">Addis Ababa → Adama</strong>
+                        <div class="text-muted" id="tripMeta">Selam Bus • <span id="tripDate">2025-11-15</span> • <span id="tripType">Economy</span></div>
+                    </div>
+                    <div class="summary-price">
+                        <span id="seatCount">0 seat(s)</span>
+                        <span class="divider">•</span>
+                        <span id="totalPrice">ETB 0</span>
+                    </div>
+                </div>
+                
+                <!-- Bus Type Selector -->
+                <div class="bus-type-selector">
+                    <label class="bus-type-option">
+                        <input type="radio" name="busType" value="economy" checked>
+                        <span>Economy</span>
+                    </label>
+                    <label class="bus-type-option">
+                        <input type="radio" name="busType" value="business">
+                        <span>Business</span>
+                    </label>
+                    <label class="bus-type-option">
+                        <input type="radio" name="busType" value="luxury">
+                        <span>Luxury</span>
+                    </label>
+                </div>
+            </section>
+
+            <!-- Seat Map -->
+            <section class="section">
+                <div id="seatMapContainer" class="seat-map-container"></div>
+            </section>
+
+            <!-- Selected Seats Summary -->
+            <section class="section">
+                <h3>Selection Summary</h3>
+                <div id="seatSummary"></div>
+            </section>
+
+            <!-- Passenger Forms -->
+            <section class="section">
+                <h3>Passenger Information</h3>
+                <div id="passengerForms"></div>
+            </section>
+
+            <!-- Actions -->
+            <section class="section">
+                <button class="btn-proceed-payment"><i class="fas fa-credit-card"></i> Proceed to Payment</button>
+                <p class="text-muted" style="margin-top:0.75rem">By continuing, you agree to SelamBus Terms and acknowledge the travel policies.</p>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="container footer-container">
+            <div>© <span id="year"></span> SelamBus. All rights reserved.</div>
+            <nav class="footer-nav">
+                <a href="#">Terms</a>
+                <a href="#">Privacy</a>
+                <a href="#">Support</a>
+            </nav>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="seat-map.js"></script>
+    <script>
+        // Populate dynamic trip info from query params if available
+        (function() {
+            const params = new URLSearchParams(window.location.search);
+            const from = params.get('from');
+            const to = params.get('to');
+            const date = params.get('date');
+            const company = params.get('company');
+            const type = params.get('type');
+
+            if (from && to) {
+                document.getElementById('tripRoute').textContent = `${from} → ${to}`;
+            }
+            if (date) {
+                document.getElementById('tripDate').textContent = date;
+            }
+            if (type) {
+                document.getElementById('tripType').textContent = type.charAt(0).toUpperCase() + type.slice(1);
+            }
+            if (company) {
+                const meta = document.getElementById('tripMeta');
+                meta.textContent = `${company} • ${document.getElementById('tripDate').textContent} • ${document.getElementById('tripType').textContent}`;
+            }
+
+            // Footer year
+            document.getElementById('year').textContent = new Date().getFullYear();
+        })();
+    </script>
+</body>
+</html>
